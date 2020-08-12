@@ -1,29 +1,60 @@
-set nocompatible              
-filetype off                 
+" Auto install for vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Vim-plug Config
+call plug#begin()
 
-" " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+" Utility
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'preservim/nerdtree'
 
-call vundle#end()
-filetype plugin indent on 
+" Dev
+Plug 'editorconfig/editorconfig-vim'
+Plug 'mattn/emmet-vim'
+Plug 'dense-analysis/ale'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-let g:vim_markdown_folding_disabled = 1
+" Appearance
+Plug 'itchyny/lightline.vim'
 
-set number 	    " adds line numbering
-set tabstop=4       " number of visual spaces per TAB
-set softtabstop=4   " number of spaces in tab when editing
-set expandtab       " tabs are spaces
-set showmatch           " highlight matching [{()}]
-set incsearch           " search as characters are entered
-set hlsearch            " highlight matches
+call plug#end()
 
-nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight
-filetype indent on      " load filetype-specific indent files
-syntax enable           " enable syntax processing
+" Shortcuts
+" Maps nerdtree toggle to Ctrl-o
+map <C-o> :NERDTreeToggle<CR>
 
-colorscheme badwolf         " awesome colorscheme
+" General Config
+set number
+syntax on
+" To get molokai scheme: 
+"    cd /usr/share/vim/vim*/colors
+"    sudo wget https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
+colorscheme molokai
+
+" Manual Config 
+"
+"    vim-eunuch
+"        mkdir -p ~/.vim/pack/tpope/start
+"        cd ~/.vim/pack/tpope/start
+"        git clone https://tpope.io/vim/eunuch.git
+"        vim -u NONE -c "helptags eunuch/doc" -c q
+"
+"    vim-surround
+"        https://github.com/tpope/vim-surround
+"        mkdir -p ~/.vim/pack/tpope/start
+"        cd ~/.vim/pack/tpope/start
+"        git clone https://tpope.io/vim/surround.git
+"        vim -u NONE -c "helptags surround/doc" -c q
+"
+"    vim-gitgutter
+"        https://github.com/airblade/vim-gitgutter
+"        mkdir -p ~/.vim/pack/airblade/start
+"        cd ~/.vim/pack/airblade/start
+"        git clone https://github.com/airblade/vim-gitgutter.git
+"        vim -u NONE -c "helptags vim-gitgutter/doc" -c q
